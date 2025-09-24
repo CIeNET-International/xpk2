@@ -68,7 +68,7 @@ def main() -> None:
   main_args.enable_ray_cluster = False
   set_dry_run('dry_run' in main_args and main_args.dry_run)
   if not main_args.dry_run:
-    validate_dependencies()
+    validate_dependencies(main_args)
   main_args.func(main_args)
   xpk_print('XPK Done.', flush=True)
 

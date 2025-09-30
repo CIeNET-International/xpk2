@@ -65,20 +65,11 @@ validation_commands = {
 }
 
 
-def validate_dependencies(main_args) -> None:
+def validate_dependencies():
   deps_version = xpk_cfg.get(DEPENDENCIES_KEY)
-  print(deps_version)
   xpk_version = get_xpk_version()
-  print(xpk_version)
   if deps_version is None or deps_version != xpk_version:
     for name, check in validation_commands.items():
-      # Skip docker validation if docker_image is provided for workload create commands
-    #   if (name in ('docker', 'kjob', 'kueuectl') and
-    #       getattr(main_args, 'xpk_subcommands', None) == 'workload' and
-    #       getattr(main_args, 'xpk_workload_subcommands', '').startswith('create') and
-    #       getattr(main_args, 'docker_image', None) is not None):
-    #       continue
-        
       cmd, message = check['command'], check['message']
       code, _ = run_command_for_value(cmd, f'Validate {name} installation.')
       if code != 0:
